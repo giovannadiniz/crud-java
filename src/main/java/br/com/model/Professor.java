@@ -3,16 +3,16 @@ package br.com.model;
 public class Professor {
     private int id;
     private String nome;
-    private String turma;
+    private int turma;
 
     public Professor() {}
 
-    public Professor(String nome, String turma) {
+    public Professor(String nome, int turma) {
         this.nome = nome;
         this.turma = turma;
     }
 
-    public Professor(int id, String nome, String turma) {
+    public Professor(int id, String nome, int turma) {
         this.id = id;
         this.nome = nome;
         this.turma = turma;
@@ -30,10 +30,10 @@ public class Professor {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public String getTurma() {
+    public int getTurma() {
         return turma;
     }
-    public void setTurma(String turma) {
+    public void setTurma(int idTurma) {
         this.turma = turma;
     }
 
@@ -42,7 +42,7 @@ public class Professor {
         return "Professor{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
-                ", turma='" + turma + '\'' +
+                ", idTurma='" + turma + '\'' +
                 '}';
     }
 }

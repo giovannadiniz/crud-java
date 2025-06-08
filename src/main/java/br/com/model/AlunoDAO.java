@@ -6,19 +6,19 @@ import java.util.List;
 
 public class AlunoDAO {
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/escola";
+    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String USER = "postgres";
     private static final String PASSWORD = "2025";
 
-    public void inserir(Aluno aluno){
-        String sql = "INSERT INTO alunos (nome, matricula, turma) VALUES (?, ?, ?)";
+    public void inserir(Aluno aluno) {
+        String sql = "INSERT INTO alunos (nome, matricula, idTurma) VALUES (?, ?, ?)";
 
         try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            PreparedStatement pstmt = conn.prepareStatement(sql)){
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, aluno.getNome());
             pstmt.setString(2, aluno.getMatricula());
-            pstmt.setString(3, aluno.getTurma());
+            pstmt.setInt(3, aluno.getTurma());
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -26,21 +26,21 @@ public class AlunoDAO {
         }
     }
 
-    public List<Aluno> buscarTodos(){
+    public List<Aluno> buscarTodos() {
         List<Aluno> alunos = new ArrayList<Aluno>();
         String sql = "SELECT * FROM alunos ORDER BY nome";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        ResultSet rs = pstmt.executeQuery()) {
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
                 Aluno aluno = new Aluno(
-                rs.getInt("id"),
-                rs.getString("nome"),
-                rs.getString("matricula"),
-                rs.getString("turma")
-            );
+                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("matricula"),
+                        rs.getInt("idTurma")
+                );
                 alunos.add(aluno);
             }
 
@@ -50,21 +50,21 @@ public class AlunoDAO {
         return alunos;
     }
 
-    public Aluno buscarPorId(int id){
-        String sql = "SELECT * FROM aluno WHERE id = ?";
+    public Aluno buscarPorId(int id) {
+        String sql = "SELECT * FROM alunos WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
                 return new Aluno(
-                    rs.getInt("id"),
-                    rs.getString("nome"),
-                    rs.getString("matricula"),
-                    rs.getString("turma")
+                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("matricula"),
+                        rs.getInt("idTurma")
                 );
             }
         } catch (SQLException e) {
@@ -74,7 +74,7 @@ public class AlunoDAO {
         return null;
     }
 
-    public Aluno buscarPorMatricula(String matricula){
+    public Aluno buscarPorMatricula(String matricula) {
         String sql = "SELECT * FROM alunos WHERE matricula = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -85,10 +85,10 @@ public class AlunoDAO {
 
             if (rs.next()) {
                 return new Aluno(
-                    rs.getInt("id"),
-                    rs.getString("nome"),
-                    rs.getString("matricula"),
-                    rs.getString("turma")
+                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("matricula"),
+                        rs.getInt("idTurma")
                 );
             }
 
@@ -100,18 +100,18 @@ public class AlunoDAO {
     }
 
     public void atualizar(Aluno aluno) {
-        String sql = "UPDATE alunos SET nome = ?, matricula = ?, turma = ? WHERE id = ?";
+        String sql = "UPDATE alunos SET nome = ?, matricula = ?, idTurma = ? WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            PreparedStatement pstmt = conn.prepareStatement(sql)){
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-             pstmt.setString(1, aluno.getNome());
-             pstmt.setString(2, aluno.getMatricula());
-             pstmt.setString(3, aluno.getTurma());
-             pstmt.setInt(4, aluno.getId());
-             pstmt.executeUpdate();
+            pstmt.setString(1, aluno.getNome());
+            pstmt.setString(2, aluno.getMatricula());
+            pstmt.setInt(3, aluno.getTurma());
+            pstmt.setInt(4, aluno.getId());
+            pstmt.executeUpdate();
         } catch (SQLException e) {
-                throw new RuntimeException("Erro ao atualizar aluno: " + e.getMessage());
+            throw new RuntimeException("Erro ao atualizar aluno: " + e.getMessage());
         }
     }
 
@@ -125,8 +125,7 @@ public class AlunoDAO {
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
-        throw new RuntimeException("Erro ao excluir aluno: " + e.getMessage());
+            throw new RuntimeException("Erro ao excluir aluno: " + e.getMessage());
         }
     }
 }
-

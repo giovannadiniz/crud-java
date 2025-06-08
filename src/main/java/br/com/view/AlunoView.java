@@ -1,7 +1,6 @@
 package br.com.view;
 
 import br.com.model.Aluno;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,9 +38,9 @@ public class AlunoView {
         String matricula = scanner.nextLine().trim();
 
         System.out.print("Turma: ");
-        String turma = scanner.nextLine().trim();
+        int idTurma = Integer.parseInt(scanner.nextLine().trim());
 
-        return new Aluno(nome, matricula, turma);
+        return new Aluno(nome, matricula, idTurma);
     }
 
     public void mostrarMensagem(String mensagem) {
@@ -65,11 +64,11 @@ public class AlunoView {
         String matricula = scanner.nextLine().trim();
         if (matricula.isEmpty()) matricula = alunoAtual.getMatricula();
 
-        System.out.print("Turma [" + alunoAtual.getTurma() + "]: ");
-        String turma = scanner.nextLine().trim();
-        if (turma.isEmpty()) turma = alunoAtual.getTurma();
+        System.out.print("ID da Turma [" + alunoAtual.getTurma() + "]: ");
+        String turmaInput = scanner.nextLine().trim();
+        int idTurma = turmaInput.isEmpty() ? alunoAtual.getTurma() : Integer.parseInt(turmaInput);
 
-        return new Aluno(alunoAtual.getId(), nome, matricula, turma);
+        return new Aluno(alunoAtual.getId(), nome, matricula, idTurma);
     }
 
     public boolean confirmarExclusao() {
@@ -104,7 +103,6 @@ public class AlunoView {
                     aluno.getTurma()
             );
         }
-
         System.out.println("\nTotal de alunos: " + alunos.size());
     }
 }

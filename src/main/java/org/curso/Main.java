@@ -2,6 +2,7 @@ package org.curso;
 
 import br.com.control.AlunoController;
 import br.com.control.ProfessorController;
+import br.com.control.TurmaController;
 
 import java.util.Scanner;
 
@@ -15,6 +16,7 @@ public class Main {
             System.out.println("=== Sistema Acadêmico ===");
             System.out.println("1 - Operações com Alunos");
             System.out.println("2 - Operações com Professores");
+            System.out.println("3 - Operações com turmas");
             System.out.print("Escolha: ");
 
             int opcao = scanner.nextInt();
@@ -25,11 +27,14 @@ public class Main {
             } else if (opcao == 2) {
                 ProfessorController professorController = new ProfessorController();
                 professorController.executar();
+            } else if (opcao == 3) {
+                TurmaController turmaController = new TurmaController();
+                turmaController.executar();
             } else {
                 System.out.println("Opção inválida!");
             }
 
-        } catch(ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             System.err.println("Driver PostgreSQL não encontrado: " + e.getMessage());
         } catch (Exception e) {
             System.err.println("Erro: " + e.getMessage());

@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProfessorDAO {
-    private static final String URL = "jdbc:postgresql://localhost:5432/escola";
+    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String USER = "postgres";
     private static final String PASSWORD = "2025";
 
     public void inserir(Professor professor) {
-        String sql = "INSERT INTO professores (nome, turma) VALUES (?, ?)";
+        String sql = "INSERT INTO professores (nome, idTurma) VALUES (?, ?)";
 
         try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, professor.getNome());
-            pstmt.setString(2, professor.getTurma());
+            pstmt.setInt(2, professor.getTurma());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao inserir professor: " + e.getMessage());
@@ -35,7 +35,7 @@ public class ProfessorDAO {
                 Professor professor = new Professor(
                     rs.getInt("id"),
                     rs.getString("nome"),
-                    rs.getString("turma")
+                    rs.getInt("idTurma")
                 );
                 professores.add(professor);
             }
@@ -59,7 +59,7 @@ public class ProfessorDAO {
                 return new Professor(
                     rs.getInt("id"),
                     rs.getString("nome"),
-                    rs.getString("turma")
+                    rs.getInt("turma")
                 );
             }
 
@@ -83,7 +83,7 @@ public class ProfessorDAO {
                 return new Professor(
                     rs.getInt("id"),
                     rs.getString("nome"),
-                    rs.getString("turma")
+                    rs.getInt("turma")
                 );
             }
 
@@ -108,7 +108,7 @@ public class ProfessorDAO {
                 Professor professor = new Professor(
                     rs.getInt("id"),
                     rs.getString("nome"),
-                    rs.getString("turma")
+                    rs.getInt("turma")
                 );
                 professores.add(professor);
             }
@@ -127,7 +127,7 @@ public class ProfessorDAO {
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, professor.getNome());
-            pstmt.setString(2, professor.getTurma());
+            pstmt.setInt(2, professor.getTurma());
             pstmt.setInt(3, professor.getId());
             pstmt.executeUpdate();
         } catch (SQLException e) {

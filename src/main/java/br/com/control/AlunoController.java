@@ -40,7 +40,6 @@ public class AlunoController {
         try {
             Aluno aluno = alunoView.obterDadosAluno();
 
-            // Verificar se matrícula já existe
             if (alunoDAO.buscarPorMatricula(aluno.getMatricula()) != null) {
                 alunoView.mostrarMensagem("Erro: Matrícula já existe!");
                 return;

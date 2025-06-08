@@ -1,5 +1,6 @@
 package br.com.view;
 
+import br.com.model.Aluno;
 import br.com.model.Professor;
 
 import java.util.List;
@@ -38,13 +39,9 @@ public class ProfessorView {
         String nome = scanner.nextLine().trim();
 
         System.out.print("Turma: ");
-        String turma = scanner.nextLine().trim();
+        int idTurma = Integer.parseInt(scanner.nextLine().trim());
 
-        if (nome.isEmpty() || turma.isEmpty()) {
-            throw new IllegalArgumentException("Todos os campos são obrigatórios!");
-        }
-
-        return new Professor(nome, turma);
+        return new Professor(nome, idTurma);
     }
 
     public String obterNome() {
@@ -67,9 +64,9 @@ public class ProfessorView {
 
         System.out.print("Turma [" + professorAtual.getTurma() + "]: ");
         String turma = scanner.nextLine().trim();
-        if (turma.isEmpty()) turma = professorAtual.getTurma();
+        int idTurma = turma.isEmpty() ? professorAtual.getTurma() : Integer.parseInt(turma);
 
-        return new Professor(professorAtual.getId(), nome, turma);
+        return new Professor(professorAtual.getId(), nome, idTurma);
     }
 
     public boolean confirmarCadastro() {
