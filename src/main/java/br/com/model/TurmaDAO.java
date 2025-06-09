@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TurmaDAO {
-    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String URL = "jdbc:postgresql://localhost:5432/faculdade";
     private static final String USER = "postgres";
     private static final String PASSWORD = "2025";
 
