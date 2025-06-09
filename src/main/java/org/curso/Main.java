@@ -17,6 +17,7 @@ public class Main {
             System.out.println("1 - Operações com Alunos");
             System.out.println("2 - Operações com Professores");
             System.out.println("3 - Operações com turmas");
+            System.out.println("4 - Listar tudo");
             System.out.print("Escolha: ");
 
             int opcao = scanner.nextInt();
@@ -30,6 +31,9 @@ public class Main {
             } else if (opcao == 3) {
                 TurmaController turmaController = new TurmaController();
                 turmaController.executar();
+            } else if (opcao == 4) {
+                TurmaController turmaController = new TurmaController();
+                turmaController.gerarRelatorioCompleto();
             } else {
                 System.out.println("Opção inválida!");
             }

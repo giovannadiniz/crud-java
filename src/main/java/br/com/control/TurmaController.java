@@ -2,6 +2,7 @@ package br.com.control;
 
 import br.com.model.Turma;
 import br.com.model.TurmaDAO;
+import br.com.model.TurmaDetalhada;
 import br.com.view.TurmaView;
 
 import java.util.List;
@@ -126,4 +127,12 @@ public class TurmaController {
         }
     }
 
+    public void gerarRelatorioCompleto() {
+        try {
+            List<TurmaDetalhada> dados = turmaDAO.listarTudo();
+            turmaView.mostrarTudo(dados);
+        } catch (Exception e) {
+            turmaView.mostrarMensagem("Erro ao listar turmas: " + e.getMessage());
+        }
+    }
 }

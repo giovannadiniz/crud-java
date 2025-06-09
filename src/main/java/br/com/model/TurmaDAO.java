@@ -92,7 +92,7 @@ public class TurmaDAO {
     }
 
     public void atualizar(Turma turma) {
-        String sql = "UPDATE turmas SET nome = ?, turma = ? WHERE id = ?";
+        String sql = "UPDATE turmas SET nome = ? WHERE id = ?";
 
         try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -117,5 +117,42 @@ public class TurmaDAO {
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao excluir turma: " + e.getMessage());
         }
+    }
+
+    public List<TurmaDetalhada> listarTudo() {
+        List <TurmaDetalhada> lista = new ArrayList<>();
+        String sql = "SELECT\n" +
+                "                t.id as turma_id,\n" +
+                "                t.nome as turma_nome,\n" +
+                "                a.id as aluno_id,\n" +
+                "                a.nome as aluno_nome,\n" +
+                "                p.id as professor_id,\n" +
+                "                p.nome as professor_nome\n" +
+                "            FROM turmas t\n" +
+                "            LEFT JOIN alunos a ON a.idturma = t.id\n" +
+                "            LEFT JOIN professores p ON p.idturma = t.id\n" +
+                "            ORDER BY t.nome, a.nome, p.nome";
+
+        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
+
+            while(rs.next()){
+                TurmaDetalhada detalhe = new TurmaDetalhada(
+                        rs.getLong("turma_id"),
+                        rs.getString("turma_nome"),
+                        rs.getObject("aluno_id") != null ? rs.getLong("aluno_id") : null,
+                        rs.getString("aluno_nome"),
+                        rs.getObject("professor_id") != null ? rs.getLong("professor_id") : null,
+                        rs.getString("professor_nome")
+                );
+                lista.add(detalhe);
+            }
+
+        } catch (SQLException e){
+            throw new RuntimeException("Erro ao buscar turmas: " + e.getMessage());
+        }
+
+        return lista;
     }
 }

@@ -2,6 +2,7 @@ package br.com.view;
 
 import br.com.model.Professor;
 import br.com.model.Turma;
+import br.com.model.TurmaDetalhada;
 
 import java.util.List;
 import java.util.Scanner;
@@ -94,5 +95,30 @@ public class TurmaView {
 
     public void mostrarMensagem(String mensagem) {
         System.out.println("\n" + mensagem);
+    }
+
+    public void mostrarTudo(List<TurmaDetalhada> detalhes) {
+        if (detalhes.isEmpty()) {
+            System.out.println("\nNenhum dado encontrado.");
+            return;
+        }
+
+        System.out.println("\n=== LISTA COMPLETA DE TURMAS, ALUNOS E PROFESSORES ===");
+        System.out.printf("%-5s %-20s %-5s %-20s %-5s %-20s%n",
+                "TID", "TURMA", "AID", "ALUNO", "PID", "PROFESSOR");
+        System.out.println("-".repeat(95));
+
+        for (TurmaDetalhada d : detalhes) {
+            System.out.printf("%-5s %-20s %-5s %-20s %-5s %-20s%n",
+                    d.getTurmaId(),
+                    d.getTurmaNome(),
+                    d.getAlunoId() != null ? d.getAlunoId() : "-",
+                    d.getAlunoNome() != null ? d.getAlunoNome() : "-",
+                    d.getProfessorId() != null ? d.getProfessorId() : "-",
+                    d.getProfessorNome() != null ? d.getProfessorNome() : "-"
+            );
+        }
+
+        System.out.println("\nTotal de registros: " + detalhes.size());
     }
 }
